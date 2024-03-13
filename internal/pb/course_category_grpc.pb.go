@@ -66,7 +66,7 @@ func (c *categoryServiceClient) CreateCategoryStream(ctx context.Context, opts .
 
 type CategoryService_CreateCategoryStreamClient interface {
 	Send(*CreateCategoryRequest) error
-	CloseAndRecv() (*Category, error)
+	CloseAndRecv() (*CategoryList, error)
 	grpc.ClientStream
 }
 
@@ -78,11 +78,11 @@ func (x *categoryServiceCreateCategoryStreamClient) Send(m *CreateCategoryReques
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *categoryServiceCreateCategoryStreamClient) CloseAndRecv() (*Category, error) {
+func (x *categoryServiceCreateCategoryStreamClient) CloseAndRecv() (*CategoryList, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
-	m := new(Category)
+	m := new(CategoryList)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -205,7 +205,7 @@ func _CategoryService_CreateCategoryStream_Handler(srv interface{}, stream grpc.
 }
 
 type CategoryService_CreateCategoryStreamServer interface {
-	SendAndClose(*Category) error
+	SendAndClose(*CategoryList) error
 	Recv() (*CreateCategoryRequest, error)
 	grpc.ServerStream
 }
@@ -214,7 +214,7 @@ type categoryServiceCreateCategoryStreamServer struct {
 	grpc.ServerStream
 }
 
-func (x *categoryServiceCreateCategoryStreamServer) SendAndClose(m *Category) error {
+func (x *categoryServiceCreateCategoryStreamServer) SendAndClose(m *CategoryList) error {
 	return x.ServerStream.SendMsg(m)
 }
 
