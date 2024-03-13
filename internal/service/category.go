@@ -5,6 +5,7 @@ import (
 
 	"github.com/sousapedro11/fc-grpc-go/internal/database"
 	"github.com/sousapedro11/fc-grpc-go/internal/pb"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type CategoryService struct {
@@ -27,4 +28,24 @@ func (c *CategoryService) CreateCategory(ctx context.Context, in *pb.CreateCateg
 		Name:        category.Name,
 		Description: category.Description,
 	}, nil
+}
+
+func (c *CategoryService) ListCategories(ctx context.Context, in *emptypb.Empty) (*pb.CategoryList, error) {
+	categories, err := c.CategoryDB.FindAll()
+	if err != nil {
+		return nil, err
+	}
+
+	categoryList := pb.CategoryList{
+		Categories: make([]*pb.Category, len(categories)),
+	}
+	for i, category := range categories {
+		categoryList.Categories[i] = &pb.Category{
+			Id:          category.ID,
+			Name:        category.Name,
+			Description: category.Description,
+		}
+	}
+
+	return &categoryList, nil
 }
