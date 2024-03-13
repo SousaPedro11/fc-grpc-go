@@ -13,8 +13,6 @@ message CreateCategoryRequest {
   string description = 2;
 }
 
-message CategoryResponse { Category category = 1; }
-
 service CategoryService {
-  rpc CreateCategory(CreateCategoryRequest) returns (CategoryResponse);
+  rpc CreateCategory(CreateCategoryRequest) returns (Category);
 }

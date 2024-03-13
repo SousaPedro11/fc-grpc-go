@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/sousapedro11/fc-grpc-go/internal/database"
 	"github.com/sousapedro11/fc-grpc-go/internal/pb"
 	"github.com/sousapedro11/fc-grpc-go/internal/service"
@@ -32,7 +33,6 @@ func main() {
 		log.Fatalf("could not listen: %v", err)
 	}
 
-	if err := grpcServer.Serve(listen); err != nil {
-		log.Fatalf("could not serve: %v", err)
-	}
+	log.Printf("server started at %s", listen.Addr().String())
+	log.Fatal(grpcServer.Serve(listen))
 }
