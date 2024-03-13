@@ -15,9 +15,12 @@ message CreateCategoryRequest {
   string description = 2;
 }
 
+message CategoryGetRequest { string id = 1; }
+
 message CategoryList { repeated Category categories = 1; }
 
 service CategoryService {
   rpc CreateCategory(CreateCategoryRequest) returns (Category) {};
   rpc ListCategories(google.protobuf.Empty) returns (CategoryList) {};
+  rpc GetCategory(CategoryGetRequest) returns (Category) {};
 }
